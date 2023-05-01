@@ -74,12 +74,18 @@ async function fetchUserWeatherInfo(coordinates) {
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
     );
     const data = await response.json();
+    // console.log(lon,lat);
+
+    if(+(data.cod)>400){
+      notFound.classList.add("active");
+      userInfoContainer.classList.remove("active");
+      return;
+    } 
 
     loadingScreen.classList.remove("active");
     userInfoContainer.classList.add("active");
     renderWeatherInfo(data);
   } catch (err) {
-    loadingScreen.classList.remove("active");
     //HW
   }
 }
